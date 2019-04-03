@@ -4,7 +4,6 @@ namespace App;
 
 class Sensors {
 
-    private $data;
     /** @var \App\Abstracts\Sensor[] */
     private $sensors;
     
@@ -12,7 +11,7 @@ class Sensors {
         $this->sensors = [];
     }
 
-    public function add($id, App\Abstracts\Sensor $sensor) {
+    public function add($id, \App\Abstracts\Sensor $sensor) {
         $this->sensors[$id] = $sensor;
     }
 
@@ -21,8 +20,10 @@ class Sensors {
     }
 
     public function getReadings() {
-        foreach ($this->data as $id => $sensor) {
-            $data[$id] = $sensor->read();
+        $data = [];
+        
+        foreach ($this->sensors as $key => $sensor) {
+            $data[$key] = $sensor->read();
         }
         
         return $data;
