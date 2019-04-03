@@ -4,11 +4,12 @@ namespace App\Abstracts;
 
 abstract class Sensor {
 
-    private $reading;
+    protected $reading;
 
     abstract protected function read();
 
-    public function getLastReading() {
+    protected function getLastReading() {
         return $this->reading;
     }
+    
 }
