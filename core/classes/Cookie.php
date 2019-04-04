@@ -5,7 +5,7 @@ namespace Core;
 class Cookie extends \Core\Abstracs\Cookie {
 
     public function __construct(string $name) {
-        
+        $this->name = $name;
     }
 
     public function delete(): void {
