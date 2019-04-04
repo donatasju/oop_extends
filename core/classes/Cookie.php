@@ -18,12 +18,13 @@ class Cookie extends \Core\Abstracs\Cookie {
 
     public function read(): array {
         if ($this->exists()) {
-            $decode = json_decode($_COOKIE[$this->name]);
+            $data_array = json_decode($_COOKIE[$this->name], true);
 
-            if ($decode) {
-                return $decode;
+            if ($data_array !== null) {
+                return $data_array;
+            } else {
+                trigger_error('Nepavyko decodint', E_USER_WARNING);
             }
-            trigger_error('Nepavyko decodint', E_USER_WARNING);
         }
 
         return [];
@@ -31,6 +32,7 @@ class Cookie extends \Core\Abstracs\Cookie {
 
     public function save($data, $expires_in = 3600): void {
         
+        setcookie($this->name, json_encode($data), time() + $expires_in);
     }
 
 }
