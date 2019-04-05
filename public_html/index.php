@@ -1,13 +1,16 @@
 <?php
 require '../bootloader.php';
 
-$sensors = new \App\Sensors();
-$sensor_fart_temp = new \App\SensorFartTemp();
-$sensor_fart_humidity = new \App\SensorFartHumidity();
+$cookie = new Core\Cookie('Cookis');
 
+if($cookie->exists()) {
+    $data_array = $cookie->read();
+    $data_array[0]++;
+    $cookie->save($data_array);
+} else {
+    $data_array[0];
+}
 
-$sensors->add('Sensoriaus temp', $sensor_fart_temp);
-$sensors->add('Humidity', $sensor_fart_humidity);
 
 ?>
 <html>
@@ -15,13 +18,9 @@ $sensors->add('Humidity', $sensor_fart_humidity);
         <title>Sensors</title>
     </head>
     <body>
-        <ul>
-            <?php foreach ($sensors->getReadings() as $key => $sensor): ?>
-                <li>
-                    <?php print $key; ?>
-                    <?php print $sensor; ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+        <?php if(isset($_COOKIE['Cookis'])): ?>
+        <?php print $cookie->read(0); ?>
+        <?php endif; ?>
+        
     </body>
 </html>
